@@ -7,7 +7,6 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
@@ -18,7 +17,6 @@ const slugLength = 6
 var db *sql.DB
 
 func init() {
-	rand.Seed(time.Now().UnixNano())
 	var err error
 	dbConnStr := os.Getenv("DATABASE_URL") // "postgres://user:password@db:5432/url_shortener?sslmode=disable"
 	if dbConnStr == "" {
@@ -84,5 +82,5 @@ func main() {
 	r.GET("/:slug", resolveURL)
 
 	log.Println("Server running on :8080")
-	r.Run(":8080")
+	_ = r.Run(":8080")
 }

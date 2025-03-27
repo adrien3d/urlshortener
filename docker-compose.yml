@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:15
+    container_name: url_shortener_db
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: url_shortener
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: url_shortener_api
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://user:password@db:5432/url_shortener?sslmode=disable
+    ports:
+      - "8080:8080"
+
+volumes:
+  pg_data: {}  # <-- Ensure this is explicitly declared
