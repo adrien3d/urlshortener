@@ -29,7 +29,9 @@ build: ## build docker image
 	docker build -t $(PROJECT):$(VERSION) .
 
 run: ## build docker image
-	docker run -p 8080:8080 $(PROJECT):$(VERSION)
+	docker compose up -d
+
+execute: build run ## build and run docker image
 
 version: ## display version
 	@echo $(VERSION)
